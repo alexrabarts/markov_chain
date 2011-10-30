@@ -2,18 +2,6 @@
 
 require 'singleton'
 
-class String
-  def each_char
-    if block_given?
-      scan(/./m) do |x|
-        yield x
-      end
-    else
-      scan(/./m)
-    end
-  end
-end
-
 class MarkovChain
   include Singleton
 
@@ -36,7 +24,7 @@ class MarkovChain
 
   def add_str(str)
     index = 0
-    str.each_char do |char|
+    each_char(str) do |char|
       add(char, str[index + 1]) if index <= str.size - 2
       index += 1
     end
@@ -61,6 +49,18 @@ class MarkovChain
     end.first
 
     next_char
+  end
+
+  private
+
+  def each_char(str)
+    if block_given?
+      str.scan(/./m) do |x|
+        yield x
+      end
+    else
+      str.scan(/./m)
+    end
   end
 end
 
