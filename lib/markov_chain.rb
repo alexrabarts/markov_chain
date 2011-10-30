@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'singleton'
 
 class MarkovChain
@@ -10,11 +8,72 @@ class MarkovChain
       @__instance__ ||= new
     end
 
-    def load_dict(file)
-      file.each do |line|
-        s = line.strip
-        instance.add_str s
+    def generate seed, options = {}
+      raise ArgumentError, 'Seed must be at least two characters' unless seed.length > 1
+
+      max_word_length = seed.length + 8
+
+      defaults = {
+        :size => 100,
+        :max_word_length => max_word_length,
+        :max_retries => 1000
+      }
+
+      options = defaults.merge options
+
+      load_dictionary! unless dictionary_loaded?
+
+      words = [seed]
+      old_words = []
+      retries = 0
+
+      mc = MarkovChain.instance
+
+      while words.length < options[:size] && retries < 1000 do
+        old_words = words.dup
+        word = seed.dup
+        old_word = ''
+
+        while word.length < options[:max_word_length] && word != old_word
+          old_word = word.dup
+          word << mc.get(word.slice(word.length - 1, 1))
+          words.push word.dup
+        end
+
+        words = words.map { |w| w.gsub(/[^a-z]/, '') }.uniq
+
+        retries += 1 if words == old_words
       end
+
+      words = words[0..(options[:size] - 1)]
+
+      words.sort { |a, b| a.length <=> b.length }
+    end
+
+    def load_dictionary! file = :american_english
+      if file.class == Symbol
+        file = File.join File.dirname(__FILE__), 'dictionaries', file.to_s
+      end
+
+      dictionary = File.read file
+
+      if file
+        file.each do |line|
+          s = line.strip
+          instance.add_str s
+        end
+
+        @dictionary_loaded = true
+        @dictionary = File.expand_path file
+      end
+    end
+
+    def dictionary_loaded?
+      !!@dictionary_loaded
+    end
+
+    def dictionary
+      @dictionary
     end
   end
 
@@ -22,7 +81,7 @@ class MarkovChain
     @chars = Hash.new
   end
 
-  def add_str(str)
+  def add_str str
     index = 0
     each_char(str) do |char|
       add(char, str[index + 1]) if index <= str.size - 2
@@ -30,12 +89,12 @@ class MarkovChain
     end
   end
 
-  def add(char, next_char)
+  def add char, next_char
     @chars[char] = Hash.new(0) if !@chars[char]
     @chars[char][next_char] += 1
   end
 
-  def get(char)
+  def get char
     return '' if !@chars[char]
 
     followers = @chars[char]
@@ -53,40 +112,13 @@ class MarkovChain
 
   private
 
-  def each_char(str)
+  def each_char str
     if block_given?
       str.scan(/./m) do |x|
         yield x
       end
     else
-      str.scan(/./m)
+      str.scan /./m
     end
   end
-end
-
-original_word = ARGV[0]
-
-words = []
-
-target_length = original_word.length + 6
-
-MarkovChain.load_dict File.read('dictionaries/american-english')
-
-mc = MarkovChain.instance
-
-100.times do
-  word = original_word.dup
-  char = word.slice(word.length - 1, 1)
-  word.chop!
-
-  while word.length < target_length
-    word << char
-    words.push(word.clone)
-    char = mc.get(word.slice(word.length - 1, 1))
-  end
-end
-
-words = words.sort { |a, b| a.length <=> b.length }.uniq
-words.each do |word|
-  puts word
 end
