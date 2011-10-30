@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'singleton'
+
 class String
   def each_char
     if block_given?
@@ -13,6 +15,21 @@ class String
 end
 
 class MarkovChain
+  include Singleton
+
+  class << self
+    def instance
+      @__instance__ ||= new
+    end
+
+    def load_dict(file)
+      file.each do |line|
+        s = line.strip
+        instance.add_str s
+      end
+    end
+  end
+
   def initialize
     @chars = Hash.new
   end
@@ -53,12 +70,9 @@ words = []
 
 target_length = original_word.length + 6
 
-mc = MarkovChain.new
-f = File.read('american-english')
-f.each do |line|
-  s = line.strip()
-  mc.add_str(s)
-end
+MarkovChain.load_dict File.read('../american-english')
+
+mc = MarkovChain.instance
 
 100.times do
   word = original_word.dup
