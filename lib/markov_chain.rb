@@ -70,7 +70,7 @@ words = []
 
 target_length = original_word.length + 6
 
-MarkovChain.load_dict File.read('../american-english')
+MarkovChain.load_dict File.read('dictionaries/american-english')
 
 mc = MarkovChain.instance
 
