@@ -1,3 +1,7 @@
+=== 0.2.2 / 2011-10-31
+
+* Fixes a UTF-8 issue in Ruby 1.9
+
 === 0.2.1 / 2011-10-31
 
 * Fixes issue reading dictionary passed in as symbol or string.
