@@ -26,6 +26,12 @@ A simple library for creating Markov chains from strings of text.
   # Specify the max number of words returned and the size of those words
   MarkovChain.grow_string('foo', :max_size => 6, :max_word_length => 4) # ["foo", "foon", "foong", "foone", "foona", "foongl"]
 
+== LIMITATIONS
+
+This library currently only supports the extension of words, character by
+character.  In the future, it ought to be able to build a Markov Chain using
+any kind of input array.
+
 == INSTALL:
 
   gem install markov_chain
