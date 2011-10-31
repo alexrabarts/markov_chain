@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{markov_chain}
-  s.version = "0.2.1"
+  s.name = "markov_chain"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alex Rabarts"]
-  s.date = %q{2011-10-31}
-  s.description = %q{Markov chain generator}
-  s.email = %q{alexrabarts@gmail.com}
+  s.date = "2011-10-31"
+  s.description = "Markov chain generator"
+  s.email = "alexrabarts@gmail.com"
   s.extra_rdoc_files = [
     "README.rdoc"
   ]
@@ -28,10 +28,10 @@ Gem::Specification.new do |s|
     "test/markov_chain_test.rb",
     "test/test_helper.rb"
   ]
-  s.homepage = %q{http://github.com/alexrabarts/markov_chain}
+  s.homepage = "http://github.com/alexrabarts/markov_chain"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.2}
-  s.summary = %q{A simple Markov chain generator.}
+  s.rubygems_version = "1.8.10"
+  s.summary = "A simple Markov chain generator."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
