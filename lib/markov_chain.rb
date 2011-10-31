@@ -57,8 +57,8 @@ class MarkovChain
 
       dictionary = File.read file
 
-      if file
-        file.each do |line|
+      if dictionary
+        dictionary.each do |line|
           s = line.strip
           instance.add_str s
         end
