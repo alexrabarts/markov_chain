@@ -9,7 +9,7 @@ A simple library for creating Markov chains from strings of text.
   require 'markov_chain'
 
   # Generate a chain and return the results
-  MarkovChain.generate 'foo' # ["foo", "foon", "foone", "foona", "foong", "foonan", "foones" ...
+  MarkovChain.grow_string 'foo' # ["foo", "foon", "foone", "foona", "foong", "foonan", "foones" ...
 
   # Explicitly load the default dictionary
   MarkovChain.load_dictionary!
@@ -24,7 +24,7 @@ A simple library for creating Markov chains from strings of text.
   MarkovChain.dictionary # '/path/to/dictionary'
 
   # Specify the max number of words returned and the size of those words
-  MarkovChain.generate('foo', :max_size => 6, :max_word_length => 4) # ["foo", "foon", "foong", "foone", "foona", "foongl"]
+  MarkovChain.grow_string('foo', :max_size => 6, :max_word_length => 4) # ["foo", "foon", "foong", "foone", "foona", "foongl"]
 
 == INSTALL:
 
