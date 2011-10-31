@@ -55,16 +55,18 @@ class MarkovChain
         file = File.join File.dirname(__FILE__), 'dictionaries', file.to_s
       end
 
-      dictionary = File.read file
+      dictionary = File.new file, 'r:ASCII-8BIT'
 
       if dictionary
-        dictionary.each do |line|
+        while (line = dictionary.gets)
           s = line.strip
           instance.add_str s
         end
 
         @dictionary_loaded = true
         @dictionary = File.expand_path file
+
+        dictionary.close
       end
     end
 
