@@ -8,6 +8,6 @@ class MarkovChainTest < Test::Unit::TestCase
   end
 
   should 'generate 100 words by default' do
-    assert_equal 100, MarkovChain.generate('foo').length
+    assert_equal 100, MarkovChain.grow_string('foo').length
   end
 end

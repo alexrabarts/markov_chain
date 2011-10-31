@@ -8,7 +8,7 @@ class MarkovChain
       @__instance__ ||= new
     end
 
-    def generate seed, options = {}
+    def grow_string seed, options = {}
       raise ArgumentError, 'Seed must be at least two characters' unless seed.length > 1
 
       max_word_length = seed.length + 8
