@@ -14,7 +14,7 @@ class MarkovChain
       max_word_length = seed.length + 8
 
       defaults = {
-        :size => 100,
+        :max_size => 100,
         :max_word_length => max_word_length,
         :max_retries => 1000
       }
@@ -29,7 +29,7 @@ class MarkovChain
 
       mc = MarkovChain.instance
 
-      while words.length < options[:size] && retries < 1000 do
+      while words.length < options[:max_size] && retries < options[:max_retries] do
         old_words = words.dup
         word = seed.dup
         old_word = ''
@@ -45,7 +45,7 @@ class MarkovChain
         retries += 1 if words == old_words
       end
 
-      words = words[0..(options[:size] - 1)]
+      words = words[0..(options[:max_size] - 1)]
 
       words.sort { |a, b| a.length <=> b.length }
     end

@@ -1,0 +1,27 @@
+= Markov Chain
+
+== DESCRIPTION
+
+A simple library for creating Markov chains from strings of text.
+
+== SYNOPSIS
+
+  require 'markov_chain'
+
+  # Generate a chain and return the results
+  MarkovChain.generate 'foo' # ["foo", "foon", "foone", "foona", "foong", "foonan", "foones" ...
+
+  # Explicitly load the default dictionary
+  MarkovChain.load_dictionary!
+
+  # Load a custom dictionary
+  MarkovChain.load_dictionary! '/path/to/dictionary'
+
+  # Check if a dictionary is loaded
+  MarkovChain.dictionary_loaded?
+
+  # Check the path of the loaded dictionary
+  MarkovChain.dictionary # '/path/to/dictionary'
+
+  # Specify the max number of words returned and the size of those words
+  MarkovChain.generate('foo', :max_size => 6, :max_word_length => 4) # ["foo", "foon", "foong", "foone", "foona", "foongl"]
