@@ -1,3 +1,8 @@
+=== 0.2.0 / 2011-10-31
+
+* MarkovChain.generate is now called MarkovChain.grow_string to more closely
+  reflect the specific nature of this method.
+
 === 0.1.0 / 2011-10-31
 
-Initial release.
+* Initial release.
