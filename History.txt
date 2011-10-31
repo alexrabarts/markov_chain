@@ -1,3 +1,7 @@
+=== 0.2.1 / 2011-10-31
+
+* Fixes issue reading dictionary passed in as symbol or string.
+
 === 0.2.0 / 2011-10-31
 
 * MarkovChain.generate is now called MarkovChain.grow_string to more closely
